@@ -31,6 +31,7 @@ To load extra data, you should download the corresponding data and put it under 
 `run/train_fast.py` is the main script for fast adversarial training with adaptive use of easy and hard instances.
 `run/tune_normal.py` is the main script for finetuning a pretrained model with additional data.
 
+The scripts to reproduce the key figures in our paper are demonstrated in `Figures.ipynb`. When running the scripts, please download the supporting files from [Google Drive](https://drive.google.com/drive/folders/1sVBzk4xdr1K-_KD_cJSXBLS-vRfcTTHF?usp=share_link) and save them under a folder named `results`.
 
 ## Examples
 
@@ -71,11 +72,17 @@ python run/tune_normal.py --valid_ratio 0.02 --model_type wrn --valid_freq 500 -
 * Evaluate the robustness of a model by different attacks.
 
 ```
-python run/attack_normal.py --dataset cifar10 --model_type wrn --model2load MODEL.ckpt --out_file output_apgd100-ce.json --gpu $GPU_ID$ --attack name=apgd,threshold=8,iter_num=100,order=-1,rho=0.75,loss_type=ce
+python run/attack_normal.py --dataset cifar10 --model_type wrn --model2load OUTPUT/100epoch_resnet.ckpt --out_file OUTPUT/output_apgd100-ce.json --gpu $GPU_ID$ --attack name=apgd,threshold=8,iter_num=100,order=-1,rho=0.75,loss_type=ce
 
-python run/attack_normal.py --dataset cifar10 --model_type wrn --model2load MODEL.ckpt --out_file output_apgd100-dlr.json --gpu $GPU_ID$ --attack name=apgd,threshold=8,iter_num=100,order=-1,rho=0.75,loss_type=dlr
+python run/attack_normal.py --dataset cifar10 --model_type wrn --model2load OUTPUT/100epoch_resnet.ckpt --out_file OUTPUT/output_apgd100-dlr.json --gpu $GPU_ID$ --attack name=apgd,threshold=8,iter_num=100,order=-1,rho=0.75,loss_type=dlr
 
-python run/attack_normal.py --dataset cifar10 --model_type wrn --model2load MODEL.ckpt --out_file output_square5000.json --gpu $GPU_ID$ --attack name=square,threshold=8,iter_num=5000,order=-1,window_size_factor=0
+python run/attack_normal.py --dataset cifar10 --model_type wrn --model2load OUTPUT/100epoch_resnet.ckpt --out_file OUTPUT/output_square5000.json --gpu $GPU_ID$ --attack name=square,threshold=8,iter_num=5000,order=-1,window_size_factor=0
+```
+
+* Calculate the bound of the Lipschitz constant of the model.
+
+```
+python analyze/calc_global_lip.py --iter_num 100 --model2load OUTPUT/100epoch_resnet.ckpt --out_file OUTPUT/output_lipschitz.json --gpu $GPU_ID$
 ```
 
 ## Bibliography

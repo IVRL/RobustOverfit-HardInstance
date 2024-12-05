@@ -7,6 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from util.attack import parse_attacker
+from util.lipschitz import calc_lip_linear, calc_lip_conv2d
 from copy import deepcopy
 
 class ResNet_Block(nn.Module):
@@ -41,6 +42,16 @@ class ResNet_Block(nn.Module):
         out = self.nonlinear2(out)
 
         return out
+
+    def calc_lip(self, x, iter_num = None):
+
+        lip1 = calc_lip_conv2d(nn.Sequential(self.conv1, self.bn1), x, iter_num)
+        out = self.nonlinear1(self.bn1(self.conv1(x)))
+        lip2 = calc_lip_conv2d(nn.Sequential(self.conv2, self.bn2), out, iter_num)
+        lip_shortcut = calc_lip_conv2d(self.shortcut, x, iter_num)
+        lip = lip1 * lip2 + lip_shortcut
+
+        return lip
 
 class CIFAR10_ResNet(nn.Module):
 
@@ -95,6 +106,28 @@ class CIFAR10_ResNet(nn.Module):
         out = self.classifier(out)
 
         return out
+
+    def calc_lip(self, x, iter_num = None):
+
+        lip = calc_lip_conv2d(nn.Sequential(self.conv1, self.bn1), x, iter_num)
+        out = self.nonlinear1(self.bn1(self.conv1(x)))
+
+        for layer in self.layer1:
+            lip = lip * calc_lip_conv2d(layer, out, iter_num)
+            out = layer(out)
+        for layer in self.layer2:
+            lip = lip * calc_lip_conv2d(layer, out, iter_num)
+            out = layer(out)
+        for layer in self.layer3:
+            lip = lip * calc_lip_conv2d(layer, out, iter_num)
+            out = layer(out)
+        for layer in self.layer4:
+            lip = lip * calc_lip_conv2d(layer, out, iter_num)
+            out = layer(out)
+
+        lip = lip * calc_lip_conv2d(nn.Sequential(nn.AvgPool2d(4), nn.Flatten(), self.classifier), out, iter_num)
+
+        return lip
 
     def get_features(self, x, mode = None):
 
