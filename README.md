@@ -1,4 +1,14 @@
-# Code for the paper "On the Impact of Hard Adversarial Instances on Overfitting in Adversarial Training"
+# On the Impact of Hard Adversarial Instances on Overfitting in Adversarial Training
+
+Chen Liu, Zhichao Huang, Mathieu Salzmann, Tong Zhang, Sabine Süsstrunk
+
+Journal of Machine Learning Research (JMLR), Volume 25, 2024
+
+[https://arxiv.org/pdf/2112.07324](https://arxiv.org/pdf/2112.07324)
+
+## Abstract
+
+Adversarial training is a popular method to robustify models against adversarial attacks. However, it exhibits much more severe overfitting than training on clean inputs. In this work, we investigate this phenomenon from the perspective of training instances, i.e., training input-target pairs. Based on a quantitative metric measuring the relative difficulty of an instance in the training set, we analyze the model's behavior on training instances of different difficulty levels. This lets us demonstrate that the decay in generalization performance of adversarial training is a result of fitting hard adversarial instances. We theoretically verify our observations for both linear and general nonlinear models, proving that models trained on hard instances have worse generalization performance than ones trained on easy instances, and that this generalization gap increases with the size of the adversarial budget. Finally, we investigate solutions to mitigate adversarial overfitting in several scenarios, including fast adversarial training and fine-tuning a pretrained model with additional data. Our results demonstrate that using training data adaptively improves the model's robustness.
 
 ## Requirements
 
@@ -6,12 +16,13 @@
 python      >= 3.7
 pytorch     >= 1.3
 torchvision >= 0.4
+autoattack  >= 0.1
 ```
 
 ## Instructions
 
 We rewrite the data loader for the dataset SVHN and CIFAR10 under the folder `dataset`.
-This will enable us to use a subset of the training set (Section 4.1) or to use additional data for training (Section 6.3).
+This will enable us to use a subset of the training set (Section 4) or to use additional data for training (Section 6).
 `util/attack.py` and `util/data_parser.py` define different attack algorithms and data loaders used in this paper.
 To load extra data, you should download the corresponding data and put it under `extradata/cifar10`/`extradata/cifar10-c`/`extradata/svhn`.
 
@@ -70,10 +81,12 @@ python run/attack_normal.py --dataset cifar10 --model_type wrn --model2load MODE
 ## Bibliography
 
 ```
-@article{liu2021impact,
-  title={On the impact of hard adversarial instances on overfitting in adversarial training},
-  author={Liu, Chen and Huang, Zhichao and Salzmann, Mathieu and Zhang, Tong and S{\"u}sstrunk, Sabine},
-  journal={arXiv preprint arXiv:2112.07324},
-  year={2021}
+@article{liu2024impact,
+  author  = {Liu, Chen and Huang, Zhichao and Salzmann, Mathieu and Zhang, Tong and S{\"u}sstrunk, Sabine},
+  title   = {On the impact of hard adversarial instances on overfitting in adversarial training},
+  journal = {Journal of Machine Learning Research},
+  year    = {2024},
+  volume  = {25},
+  pages   = {1--46},
 }
 ```
