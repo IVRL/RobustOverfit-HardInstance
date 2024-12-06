@@ -24,14 +24,14 @@ autoattack  >= 0.1
 We rewrite the data loader for the dataset SVHN and CIFAR10 under the folder `dataset`.
 This will enable us to use a subset of the training set (Section 4) or to use additional data for training (Section 6).
 `util/attack.py` and `util/data_parser.py` define different attack algorithms and data loaders used in this paper.
-To load extra data, you should download the corresponding data and put it under `extradata/cifar10`/`extradata/cifar10-c`/`extradata/svhn`.
+To load extra data, you should download the corresponding data and put it under `extradata/cifar10`/`extradata/cifar10-c`/`extradata/svhn`. For example, you should download the extra data for cifar10 from [Google Drive](https://drive.google.com/file/d/1LTw3Sb5QoiCCN-6Y5PEKkq9C9W60w-Hi/view).
 
 `run/train_normal.py` is the main script for training, in which we save the loss value of each instance in each epoch. This information will be used to calculate the instance difficulty.
 `run/attack_normal.py` is the main script for evaluation under different attacks. Especially, we use the AutoAttack library ([Github Link](https://github.com/fra31/auto-attack)), the state-of-the-art attacker, for evaluation.
 `run/train_fast.py` is the main script for fast adversarial training with adaptive use of easy and hard instances.
 `run/tune_normal.py` is the main script for finetuning a pretrained model with additional data.
 
-The scripts to reproduce the key figures in our paper are demonstrated in `Figures.ipynb`. When running the scripts, please download the supporting files from [Google Drive](https://drive.google.com/drive/folders/1sVBzk4xdr1K-_KD_cJSXBLS-vRfcTTHF?usp=share_link) and save them under a folder named `results`.
+The scripts to reproduce the key figures in our paper are demonstrated in `Figures.ipynb`. When running the scripts, please download the supporting files from [Google Drive](https://drive.google.com/drive/folders/1sVBzk4xdr1K-_KD_cJSXBLS-vRfcTTHF?usp=sharing) and save them under a folder named `results`.
 
 ## Examples
 
