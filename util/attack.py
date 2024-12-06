@@ -280,7 +280,7 @@ class APGD(object):
         attacker = APGDAttack(model, n_restarts = 5, n_iter = self.iter_num, verbose=False, eps = self.threshold,
             norm = norm, eot_iter = 1, rho = self.rho, seed = time.time(), loss = self.loss_type, device = data_batch.device)
 
-        _, adv_data_batch = attacker.perturb(data_batch, label_batch, cheap = True)
+        _, adv_data_batch = attacker.perturb(data_batch, label_batch)
 
         return adv_data_batch.detach(), label_batch
 
