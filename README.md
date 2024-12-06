@@ -72,11 +72,11 @@ python run/tune_normal.py --valid_ratio 0.02 --model_type wrn --valid_freq 500 -
 * Evaluate the robustness of a model by different attacks.
 
 ```
-python run/attack_normal.py --dataset cifar10 --model_type wrn --model2load OUTPUT/100epoch_resnet.ckpt --out_file OUTPUT/output_apgd100-ce.json --gpu $GPU_ID$ --attack name=apgd,threshold=8,iter_num=100,order=-1,rho=0.75,loss_type=ce
+python run/attack_normal.py --dataset cifar10 --model_type resnet --model2load OUTPUT/100epoch_resnet.ckpt --out_file OUTPUT/output_apgd100-ce.json --gpu $GPU_ID$ --attack name=apgd,threshold=8,iter_num=100,order=-1,rho=0.75,loss_type=ce
 
-python run/attack_normal.py --dataset cifar10 --model_type wrn --model2load OUTPUT/100epoch_resnet.ckpt --out_file OUTPUT/output_apgd100-dlr.json --gpu $GPU_ID$ --attack name=apgd,threshold=8,iter_num=100,order=-1,rho=0.75,loss_type=dlr
+python run/attack_normal.py --dataset cifar10 --model_type resnet --model2load OUTPUT/100epoch_resnet.ckpt --out_file OUTPUT/output_apgd100-dlr.json --gpu $GPU_ID$ --attack name=apgd,threshold=8,iter_num=100,order=-1,rho=0.75,loss_type=dlr
 
-python run/attack_normal.py --dataset cifar10 --model_type wrn --model2load OUTPUT/100epoch_resnet.ckpt --out_file OUTPUT/output_square5000.json --gpu $GPU_ID$ --attack name=square,threshold=8,iter_num=5000,order=-1,window_size_factor=0
+python run/attack_normal.py --dataset cifar10 --model_type resnet --model2load OUTPUT/100epoch_resnet.ckpt --out_file OUTPUT/output_square5000.json --gpu $GPU_ID$ --attack name=square,threshold=8,iter_num=5000,order=-1,window_size_factor=0
 ```
 
 * Calculate the bound of the Lipschitz constant of the model.
